@@ -3,27 +3,36 @@ import sys
 import os.path, time
 from datetime import datetime, timedelta
 
-def sprawdz(file,f,oneHourAgo):
+def getUserParams():
+    if len(sys.argv) < 2:
+        print('''\nToo few arguments. Params <days>''')
+        exit()
+    else:
+        return sys.argv
+
+
+def check_date(file,log,oneHourAgo,days):
     #oneHourAgo = datetime.now().strftime("%c")
-    oneHourAgoObj = datetime.strptime(oneHourAgo, '%c') - timedelta(minutes=60)
-    fileDateObj = oneHourAgoObj - timedelta(minutes=60)
+    #days =  datetime.strptime(days, '%c')
+    oneHourAgoObj = datetime.strptime(oneHourAgo, '%c') - timedelta(days=int(days))
+    fileDateObj = oneHourAgoObj - timedelta(days=int(days))
     fileDate = time.ctime(os.path.getmtime(file))
     fileDateObj = datetime.strptime(fileDate, '%c')
-   
-
     #print(fileDateObj)
     #print("godzina temu: ", oneHourAgoObj)
     if fileDateObj > oneHourAgoObj:
         print("modyfikacja: ", file," ", fileDateObj)
-        f.write("modyfikacja: " + file + " " + str(fileDateObj) + "\n")
+        log.write("modyfikacja: " + file + " " + str(fileDateObj) + "\n")
         #else:
             #print("starszy")
-            
+
+getUserParams()            
 folder_path = sys.argv[1]
+days = sys.argv[2]
 oneHourAgo = datetime.now().strftime("%c")
-f = open("/root/log", "a")
-print("przeszukiwanie rozpoczęte")
-f.write("przeszukiwanie rozpoczęte: " + oneHourAgo + "\n\n")
+log = open("log", "a", encoding="utf-8")
+print("przeszukiwanie rozpoczęte\n")
+log.write("przeszukiwanie rozpoczęte: " + oneHourAgo + "\n\n")
 #print("zmodyfikowany lub dodany w ciagu ostatniej godziny: ")
 for root, dirs, files in os.walk(folder_path, topdown=True):
     #for name in dirs:
@@ -34,11 +43,10 @@ for root, dirs, files in os.walk(folder_path, topdown=True):
         try:
             #print(file)
             #f.write(file)
-            
-            sprawdz(file,f,oneHourAgo)
+            check_date(file,log,oneHourAgo,days)
         except UnicodeEncodeError:
             print("UnicodeEncodeError")
-            f.write("UnicodeEncodeError\n")
-print("przeszukiwanie zakończone")
-f.write("\nprzeszukiwanie zakończone\n\n")
-f.close()
+            log.write("UnicodeEncodeError\n")
+print("\nprzeszukiwanie zakończone")
+log.write("\nprzeszukiwanie zakończone\n\n")
+log.close()
