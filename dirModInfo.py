@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 
 def getUserParams():
     if len(sys.argv) < 2:
-        print('''\nToo few arguments. Params <days>''')
+        print('''\nToo few arguments. Params <folder_path> <days>''')
         exit()
     else:
         return sys.argv
@@ -30,7 +30,7 @@ getUserParams()
 folder_path = sys.argv[1]
 days = sys.argv[2]
 oneHourAgo = datetime.now().strftime("%c")
-log = open("log", "a", encoding="utf-8")
+log = open("log", "w", encoding="utf-8")
 print("przeszukiwanie rozpoczęte\n")
 log.write("przeszukiwanie rozpoczęte: " + oneHourAgo + "\n\n")
 #print("zmodyfikowany lub dodany w ciagu ostatniej godziny: ")
