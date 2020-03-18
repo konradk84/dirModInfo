@@ -22,7 +22,7 @@ def check_date(file,log,oneHourAgo,days):
     #print("godzina temu: ", oneHourAgoObj)
     if fileDateObj > oneHourAgoObj:
         print("modyfikacja: ", file," ", fileDateObj)
-        log.write("modyfikacja: " + file + " " + str(fileDateObj) + "\n")
+        log.write("modyfikacja: " + file + " " + str(fileDateObj) + "\n\n")
         #else:
             #print("starszy")
 
