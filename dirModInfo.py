@@ -22,7 +22,7 @@ def check_date(file,log,oneHourAgo,days):
     #print("godzina temu: ", oneHourAgoObj)
     if fileDateObj > oneHourAgoObj:
         print("modyfikacja: ", file," ", fileDateObj)
-        log.write("modyfikacja: " + file + " " + str(fileDateObj) + "\n\n")
+        log.write("modyfikacja: " + "\n" + file + " " + str(fileDateObj) + "\n\n")
         #else:
             #print("starszy")
 
@@ -31,6 +31,7 @@ folder_path = sys.argv[1]
 days = sys.argv[2]
 oneHourAgo = datetime.now().strftime("%c")
 log = open("log", "w", encoding="utf-8")
+#log = open("/././ftp/zmiany.txt", "w", encoding="utf-8")
 print("przeszukiwanie rozpoczęte\n")
 log.write("przeszukiwanie rozpoczęte: " + oneHourAgo + "\n\n")
 #print("zmodyfikowany lub dodany w ciagu ostatniej godziny: ")
